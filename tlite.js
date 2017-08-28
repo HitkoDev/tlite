@@ -119,6 +119,17 @@ tlite.show = function (el, opts, isAuto) {
       positionTooltip();
     }
 
+    if ((vertGrav === 'e' && rect.left < 0) || (vertGrav === 'w' && rect.right > window.innerWidth)) {
+      vertGrav = 's';
+      if (vertGrav === 's' && rect.top < 0) {
+        vertGrav = 'n';
+        positionTooltip();
+      } else if (vertGrav === 'n' && rect.bottom > window.innerHeight) {
+        vertGrav = 's';
+        positionTooltip();
+      }
+    }
+
     tooltipEl.className += ' tlite-visible';
 
     return tooltipEl;
