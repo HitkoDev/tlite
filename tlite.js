@@ -99,6 +99,19 @@ tlite.show = function (el, opts, isAuto) {
         vertGrav === 'e' ? (left - tooltipWidth - arrowSize) :
         (centerEl - tooltipWidth / 2)
       ) + 'px';
+
+      var rect = tooltipEl.getBoundingClientRect();
+      if ((vertGrav === 's' || vertGrav === 'n') && (rect.left < 0 || rect.right > window.innerWidth)) {
+        if (rect.right > window.innerWidth) {
+          var changeLeft = rect.right - window.innerWidth + 5;
+          tooltipEl.style.left = ((centerEl - tooltipWidth / 2) - changeLeft) + 'px';
+          rect = tooltipEl.getBoundingClientRect();
+        }
+        if (rect.left < 0) {
+          var changeLeft = 5 - rect.left;
+          tooltipEl.style.left = ((centerEl - tooltipWidth / 2) + changeLeft) + 'px';
+        }
+      }
     }
 
     positionTooltip();
@@ -119,10 +132,12 @@ tlite.show = function (el, opts, isAuto) {
       positionTooltip();
     }
 
-    var rect = tooltipEl.getBoundingClientRect();
+    rect = tooltipEl.getBoundingClientRect();
 
     if ((vertGrav === 'e' && rect.left < 0) || (vertGrav === 'w' && rect.right > window.innerWidth)) {
       vertGrav = 's';
+      positionTooltip();
+      rect = tooltipEl.getBoundingClientRect();
       if (vertGrav === 's' && rect.top < 0) {
         vertGrav = 'n';
         positionTooltip();
