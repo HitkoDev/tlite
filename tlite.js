@@ -119,6 +119,8 @@ tlite.show = function (el, opts, isAuto) {
       positionTooltip();
     }
 
+    var rect = tooltipEl.getBoundingClientRect();
+
     if ((vertGrav === 'e' && rect.left < 0) || (vertGrav === 'w' && rect.right > window.innerWidth)) {
       vertGrav = 's';
       if (vertGrav === 's' && rect.top < 0) {
